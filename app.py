@@ -1,5 +1,14 @@
-import requests 
 import bs4
+import requests
+from flask import Flask
+from flask import request
+from flask import render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return  render_template("index.html")
 
 result = requests.get("https://www.last.fm/user/mxnnxtz")
 soup = bs4.BeautifulSoup(result.text, "lxml")
@@ -14,11 +23,11 @@ image = soup.select('img')[4]
 links = image['src']
 print(image)
 
-file = open("index.html","r+")
+file = open("templates/index.html","r+")
 file.truncate(0)
 file.close()
 
-with open("index.html", "a") as f:
+with open("templates/index.html", "a") as f:
 	f.write('<html>')
 	f.write('<head>')
 	f.write('<title>Songs</title>')
